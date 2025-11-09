@@ -1,0 +1,13 @@
+.appHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: lightgray;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+
+    button {
+        margin: 10px;
+    }
+}

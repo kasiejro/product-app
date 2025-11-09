@@ -1,0 +1,11 @@
+.productListItem {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
