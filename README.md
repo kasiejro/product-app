@@ -15,3 +15,38 @@ Tech Stack
 | State Management | Zustand                        |
 | Testing          | Vitest + React Testing Library |
 | Linting/Format   | ESLint + Prettier              |
+
+---
+
+Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/kasiejro/product-app.git
+cd product-app
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
+
+```bash
+npm run dev
+```
+
+App will be available at: http://localhost:5173
+
+---
+
+Running Tests
+
+### Running unit tests
+
+```bash
+npm run test
+```
