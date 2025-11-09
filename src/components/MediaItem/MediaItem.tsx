@@ -6,23 +6,28 @@ export const MediaItem = ({
     image,
     errorImageSrc = 'https://placehold.co/200x200?text=Broken+Image',
     size = 200,
+    displayName = false,
 }: {
     image: ProductImage;
     errorImageSrc?: string;
     size?: number;
+    displayName?: boolean;
 }) => {
     const [src, setSrc] = useState(image.url);
 
     return (
-        <img
-            src={src}
-            alt={image.name}
-            onError={() => setSrc(errorImageSrc)}
-            style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                objectFit: 'cover',
-            }}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <img
+                src={src}
+                alt={image.name}
+                onError={() => setSrc(errorImageSrc)}
+                style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    objectFit: 'cover',
+                }}
+            />
+            {displayName && <span>{image.name}</span>}
+        </div>
     );
 };

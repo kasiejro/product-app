@@ -42,7 +42,11 @@ const ViewProductDetails = ({ onUpdateClick }: ViewProductDetailsProps) => {
                 {images.length > 0 && (
                     <div className='media'>
                         {images.map((image) => (
-                            <MediaItem key={image.url} image={image} />
+                            <MediaItem
+                                key={image.url}
+                                image={image}
+                                displayName
+                            />
                         ))}
                     </div>
                 )}
