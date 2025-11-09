@@ -12,8 +12,8 @@ const mockSelectedProduct: Product = {
     number: '123',
     description: 'Super laptop',
     images: [
-        { url: 'link-to-laptop-image', name: 'Laptop image' },
-        { url: 'link-to-laptop-image2', name: 'Laptop image2' },
+        { id: '1', url: 'link-to-laptop-image', name: 'Laptop image' },
+        { id: '2', url: 'link-to-laptop-image2', name: 'Laptop image2' },
     ],
 };
 const mockUpdateProduct = vi.fn();
