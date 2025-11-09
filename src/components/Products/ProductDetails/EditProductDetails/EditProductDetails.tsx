@@ -66,6 +66,7 @@ export const EditProductDetails = ({ onClose }: { onClose: () => void }) => {
                 <div className='formField'>
                     <label htmlFor={`name-${selectedProduct.id}`}>Name:</label>
                     <input
+                        data-testid={`name-${selectedProduct.id}`}
                         id={`name-${selectedProduct.id}`}
                         type='text'
                         name='name'

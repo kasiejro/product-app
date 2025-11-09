@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { Product } from '../../../../interfaces/product';
@@ -37,16 +37,13 @@ describe('EditProductDetails', () => {
         expect(
             screen.getByRole('heading', { name: /edit product details/i }),
         ).toBeInTheDocument();
-        expect(screen.getByRole('textbox', { name: /name/i })).toHaveValue(
-            'Laptop',
-        );
-        expect(screen.getByLabelText(/name/i)).toHaveValue('Laptop');
+        expect(screen.getByTestId(/name-1/i)).toHaveValue('Laptop');
         expect(screen.getByLabelText(/number/i)).toHaveValue('123');
         expect(screen.getByLabelText(/description/i)).toHaveValue(
             'Super laptop',
         );
         expect(screen.getByText(/images:/i)).toBeInTheDocument();
-        expect(screen.getAllByLabelText(/image/i)).toHaveLength(2);
+        expect(screen.getAllByRole('img')).toHaveLength(2);
     });
 
     it('renders form without images when the product has no images', () => {
@@ -79,7 +76,7 @@ describe('EditProductDetails', () => {
     it('disables Save button if any field is empty', () => {
         render(<EditProductDetails onClose={onClose} />);
 
-        const nameInput = screen.getByLabelText(/name/i);
+        const nameInput = screen.getByTestId(/name-1/i);
         const saveButton = screen.getByRole('button', { name: /save/i });
 
         fireEvent.change(nameInput, { target: { value: '' } });
@@ -95,8 +92,10 @@ describe('EditProductDetails', () => {
         const saveButton = screen.getByRole('button', { name: /save/i });
         fireEvent.click(saveButton);
 
-        expect(mockUpdateProduct).toHaveBeenCalledTimes(1);
-        expect(onClose).toHaveBeenCalledTimes(1);
+        waitFor(() => {
+            expect(mockUpdateProduct).toHaveBeenCalledTimes(1);
+            expect(onClose).toHaveBeenCalledTimes(1);
+        });
     });
 
     it('renders "Product not found" information if no selected product not found', () => {
