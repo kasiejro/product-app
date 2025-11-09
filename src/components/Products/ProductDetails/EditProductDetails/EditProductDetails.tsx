@@ -10,6 +10,7 @@ export const EditProductDetails = ({ onClose }: { onClose: () => void }) => {
         name: selectedProduct?.name || '',
         number: selectedProduct?.number || '',
         description: selectedProduct?.description || '',
+        images: selectedProduct?.images || [],
     });
     const [isDisabled, setIsDisabled] = useState(false);
 
@@ -23,14 +24,30 @@ export const EditProductDetails = ({ onClose }: { onClose: () => void }) => {
         setFormData((prev) => {
             const { name, value } = e.target;
             const newFormData = { ...prev, [name]: value };
+
             // validation ensuring no empty fields
             const hasEmpty = Object.values(newFormData).some(
-                (formValue) => !formValue.trim(),
+                (formValue) => !Array.isArray(formValue) && !formValue.trim(),
             );
 
             setIsDisabled(hasEmpty);
 
             return newFormData;
+        });
+    };
+
+    const handleImageChange = (
+        e: ChangeEvent<HTMLInputElement>,
+        imageId: string,
+    ) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+
+        setFormData((prev) => {
+            const updatedImages = prev.images.map((img) =>
+                img.id === imageId ? { ...img, [name]: value } : img,
+            );
+            return { ...prev, images: updatedImages };
         });
     };
 
@@ -86,24 +103,46 @@ export const EditProductDetails = ({ onClose }: { onClose: () => void }) => {
                 <>
                     <label>Images:</label>
 
-                    {selectedProduct.images.map((image) => (
-                        <div key={image.url} className='imagesFormField'>
+                    {formData.images.map((image) => (
+                        <div key={image.id} className='imagesFormField'>
                             <MediaItem image={image} size={100} />
 
                             <div className='imageData'>
-                                <label
-                                    key={image.url}
-                                    htmlFor={`image-url-${image.url}`}
-                                >
-                                    {image.name}
-                                </label>
-                                <input
-                                    id={`image-url-${image.url}`}
-                                    type='url'
-                                    name='image'
-                                    value={image.url}
-                                    disabled
-                                />
+                                <div className='formField'>
+                                    <label
+                                        key={image.name}
+                                        htmlFor={`image-name-${image.id}`}
+                                    >
+                                        Name:
+                                    </label>
+                                    <input
+                                        id={`image-name-${image.id}`}
+                                        type='text'
+                                        name='name'
+                                        value={image.name}
+                                        onChange={(e) =>
+                                            handleImageChange(e, image.id)
+                                        }
+                                    />
+                                </div>
+
+                                <div className='formField'>
+                                    <label
+                                        key={image.url}
+                                        htmlFor={`image-url-${image.id}`}
+                                    >
+                                        URL:
+                                    </label>
+                                    <input
+                                        id={`image-url-${image.id}`}
+                                        type='url'
+                                        name='url'
+                                        value={image.url}
+                                        onChange={(e) =>
+                                            handleImageChange(e, image.id)
+                                        }
+                                    />
+                                </div>
                             </div>
                         </div>
                     ))}
